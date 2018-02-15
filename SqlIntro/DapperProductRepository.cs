@@ -68,7 +68,7 @@ namespace SqlIntro
             using (var conn = _conn)
             {
                 conn.Open();
-                conn.Query("INSERT into product (name) values(@name)", new { prod.Name });
+                conn.Execute("INSERT into product (name) values(@name)", new { prod.Name });
 
             }
         }
