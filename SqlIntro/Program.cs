@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Configuration;
+using MySql.Data.MySqlClient;
 
 namespace SqlIntro
 {
@@ -6,17 +8,33 @@ namespace SqlIntro
     {
         static void Main(string[] args)
         {
-            var connectionString = "Server=localhost;Database=adventureworks;Uid=root;Pwd=password"; 
-            var repo = new ProductRepository(connectionString);
+            var connectionString = ConfigurationManager.ConnectionStrings["AdventureWorks"].ConnectionString;
+            var connection = new MySqlConnection(connectionString);
+
+            var repo = new ProductRepository(connection);
+
+            Product product = null;
+
             foreach (var prod in repo.GetProducts())
             {
+                if (product == null)
+                {
+                    product = prod;
+                }
+
                 Console.WriteLine("Product Name:" + prod.Name);
             }
 
-           
+            repo.DeleteProduct(3);
+
+            if (product != null)
+            {
+                product.Name = "Cody's lame product";
+                repo.UpdateProduct(product);
+            }
             Console.ReadLine();
         }
 
-       
+
     }
 }
