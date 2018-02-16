@@ -8,7 +8,7 @@ namespace SqlIntro
     {
         static void Main(string[] args)
         {
-            var connectionString = ConfigurationManager.ConnectionStrings["AdventureWorks"].ConnectionString;
+            var connectionString = ConfigurationManager.ConnectionStrings["MySQLConnection"].ConnectionString;
             var connection = new MySqlConnection(connectionString);
 
             var repo = new ProductRepository(connection);

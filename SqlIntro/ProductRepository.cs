@@ -30,7 +30,7 @@ namespace SqlIntro
                 conn.Open();
 
                 var cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT Name FROM product";
+                cmd.CommandText = "SELECT Name, ProductId FROM product";
 
                 var dr = cmd.ExecuteReader();
                 while (dr.Read())
@@ -74,7 +74,7 @@ namespace SqlIntro
                 conn.Open();
 
                 var cmd = conn.CreateCommand();
-                cmd.CommandText = "update product set name = @name where id = @id";
+                cmd.CommandText = "update product set name = @name where ProductId = @id";
 
                 cmd.AddParamWithValue("@name", prod.Name);
                 cmd.AddParamWithValue("@id", prod.Id);

@@ -8,5 +8,7 @@ namespace SqlIntro
         IEnumerable<Product> GetProducts();
         void InsertProduct(Product prod);
         void UpdateProduct(Product prod);
+        IEnumerable<Product> GetProductsWithReview();
+        IEnumerable<Product> GetProductsAndReviews();
     }
 }
