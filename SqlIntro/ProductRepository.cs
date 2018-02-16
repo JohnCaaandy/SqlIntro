@@ -18,6 +18,7 @@ namespace SqlIntro
         {
             _conn = conn;
         }
+
         /// <summary>
         /// Reads all the products from the products table
         /// </summary>
@@ -59,6 +60,7 @@ namespace SqlIntro
                 cmd.ExecuteNonQuery();
             }
         }
+
         /// <summary>
         /// Updates the Product in the database
         /// </summary>
@@ -102,7 +104,7 @@ namespace SqlIntro
                 conn.Open();
 
                 var cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT Name FROM product JOIN ON ";
+                cmd.CommandText = "SELECT product.Name, productreview.Rating FROM product INNER JOIN ON ProductID ";
 
                 var dr = cmd.ExecuteReader();
                 while (dr.Read())
@@ -114,11 +116,26 @@ namespace SqlIntro
                     };
                 }
             }
-
+        }
         public IEnumerable<Product> GetProductsAndReviews()
         {
-            throw new NotImplementedException();
-        }
+            using (var conn = _conn)
+            {
+                conn.Open();
 
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT product.Name, productreview.Rating FROM product LEFT JOIN ON ProductID ";
+
+                var dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    yield return new Product
+                    {
+                        Name = dr["Name"].ToString(),
+                        Id = int.Parse(dr["ProductId"].ToString())
+                    };
+                }
+            }
+        }
     }
 }
