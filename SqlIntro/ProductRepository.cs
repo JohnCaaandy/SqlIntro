@@ -38,60 +38,87 @@ namespace SqlIntro
                     {
                         Name = dr["Name"].ToString(),
                         Id = int.Parse(dr["ProductId"].ToString())
-                };
+                    };
+                }
             }
         }
-    }
 
-    /// <summary>
-    /// Deletes a Product from the database
-    /// </summary>
-    /// <param name="id"></param>
-    public void DeleteProduct(int id)
-    {
-        using (var conn = _conn)
+        /// <summary>
+        /// Deletes a Product from the database
+        /// </summary>
+        /// <param name="id"></param>
+        public void DeleteProduct(int id)
         {
-            conn.Open();
+            using (var conn = _conn)
+            {
+                conn.Open();
 
-            var cmd = conn.CreateCommand();
-            cmd.CommandText = "DELETE FROM product WHERE ProductId= @id";
-            cmd.AddParamWithValue("@id", id);
-            cmd.ExecuteNonQuery();
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = "DELETE FROM product WHERE ProductId= @id";
+                cmd.AddParamWithValue("@id", id);
+                cmd.ExecuteNonQuery();
+            }
         }
-    }
-    /// <summary>
-    /// Updates the Product in the database
-    /// </summary>
-    /// <param name="prod"></param>
-    public void UpdateProduct(Product prod)
-    {
-
-        using (var conn = _conn)
+        /// <summary>
+        /// Updates the Product in the database
+        /// </summary>
+        /// <param name="prod"></param>
+        public void UpdateProduct(Product prod)
         {
 
-            conn.Open();
+            using (var conn = _conn)
+            {
 
-            var cmd = conn.CreateCommand();
-            cmd.CommandText = "update product set name = @name where id = @id";
+                conn.Open();
 
-            cmd.AddParamWithValue("@name", prod.Name);
-            cmd.AddParamWithValue("@id", prod.Id);
-            cmd.ExecuteNonQuery();
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = "update product set name = @name where id = @id";
+
+                cmd.AddParamWithValue("@name", prod.Name);
+                cmd.AddParamWithValue("@id", prod.Id);
+                cmd.ExecuteNonQuery();
+            }
         }
-    }
-    /// <summary>
-    /// Inserts a new Product into the database
-    /// </summary>
-    /// <param name="prod"></param>
-    public void InsertProduct(Product prod)
-    {
-        using (var conn = _conn)
+
+        /// <summary>
+        /// Inserts a new Product into the database
+        /// </summary>
+        /// <param name="prod"></param>
+        public void InsertProduct(Product prod)
         {
-            var cmd = conn.CreateCommand();
-            cmd.CommandText = "INSERT into product (name) values(@name)";
-            cmd.AddParamWithValue("@name", prod.Name);
-            cmd.ExecuteNonQuery();
+            using (var conn = _conn)
+            {
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = "INSERT into product (name) values(@name)";
+                cmd.AddParamWithValue("@name", prod.Name);
+                cmd.ExecuteNonQuery();
+            }
         }
+
+        public IEnumerable<Product> GetProductsWithReview()
+        {
+            using (var conn = _conn)
+            {
+                conn.Open();
+
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT Name FROM product JOIN ON ";
+
+                var dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    yield return new Product
+                    {
+                        Name = dr["Name"].ToString(),
+                        Id = int.Parse(dr["ProductId"].ToString())
+                    };
+                }
+            }
+
+        public IEnumerable<Product> GetProductsAndReviews()
+        {
+            throw new NotImplementedException();
+        }
+
     }
-}
 }

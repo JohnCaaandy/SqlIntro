@@ -72,5 +72,23 @@ namespace SqlIntro
 
             }
         }
+        public IEnumerable<Product> GetProductsWithReview()
+        {
+            using (var conn = _conn)
+            {
+                conn.Open();
+                return conn.Query<Product>("SELECT product.Name, productreview.Rating FROM product INNER JOIN ON ProductID ");
+
+            }
+        }
+        public IEnumerable<Product> GetProductsAndReviews()
+        {
+            using (var conn = _conn)
+            {
+                conn.Open();
+                return conn.Query<Product>("SELECT product.Name, productreview.Rating FROM product LEFT JOIN ON ProductID ");
+
+            }
+        }
     }
 }
