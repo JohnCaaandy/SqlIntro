@@ -104,7 +104,7 @@ namespace SqlIntro
                 conn.Open();
 
                 var cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT product.Name, productreview.Rating FROM product INNER JOIN ON ProductID ";
+                cmd.CommandText = "SELECT product.Name, productreview.Rating FROM product INNER JOIN productreview ON product.ProductID=productreview.ProductID ";
 
                 var dr = cmd.ExecuteReader();
                 while (dr.Read())
@@ -124,7 +124,7 @@ namespace SqlIntro
                 conn.Open();
 
                 var cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT product.Name, productreview.Rating FROM product LEFT JOIN ON ProductID ";
+                cmd.CommandText = "SELECT product.Name, productreview.Rating FROM product LEFT JOIN productreview ON product.ProductID=productreview.ProductID ";
 
                 var dr = cmd.ExecuteReader();
                 while (dr.Read())
